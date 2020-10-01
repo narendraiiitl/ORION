@@ -396,14 +396,16 @@ async function database(message,query1='NULL',query2='NULL',query3='NULL',query4
                                        last=fetched[0].lastchange;
                                        streak=fetched[0].pulls;
                                        console.log(last);
+                                       let flag=0;
                                        for (b in retvalue){
                                                if(retvalue[b].created_at.split('-')[1] == '10'){
                                                          if(retvalue[b].type == 'PullRequestEvent'){
                                                               if(retvalue[b].id != last){
                                                                 streak++;
                                                                 if(flag == 0){console.log(streak); flag++;last=retvalue[b].id;}
-                                                                repo = retvalue[b].payload.pull_request.url;
+                                                                repoapi = retvalue[b].payload.pull_request.url;
                                                                 name = retvalue[b].payload.pull_request.title;
+                                                                repo=repoapi.replace("api.","").replace("/repos","");
                                                                 channel.send(handle+" made a pull request **"+name+"** at "+repo); 
                                                                 }
                                                               else{
